@@ -214,8 +214,6 @@ public class Jing_Chessboard implements ActionListener {
             }
         });
         //添加container容器，放一系列按钮
-
-
         //初始化
         depth = 0;
         first_or_last = 0;
