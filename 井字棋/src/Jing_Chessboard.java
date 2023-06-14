@@ -2,6 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 public class Jing_Chessboard implements ActionListener {
     //窗口初始化
@@ -76,6 +81,7 @@ public class Jing_Chessboard implements ActionListener {
         frame.add(bar,BorderLayout.NORTH);
 
         //给菜单的选项加监听事件
+        //开始
         item_begin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -99,6 +105,7 @@ public class Jing_Chessboard implements ActionListener {
                 }
             }
         });
+        //重来
         item_reset.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -109,6 +116,30 @@ public class Jing_Chessboard implements ActionListener {
                     }
                 }
             }
+        });
+        //保存
+        item_save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String fileName = "myText.txt";
+                File file = new File(fileName);
+                try {
+                    if (!file.exists()) {
+                        file.createNewFile();
+                    }
+                    FileWriter writer = new FileWriter(file,true);
+                    if(is_win(board_value)==1)
+                    {
+                        writer.write("电脑赢\n");
+                    } else if (is_win(board_value)==-1) {
+                        writer.write("玩家赢\n");
+                    }
+                    writer.close();
+                } catch (IOException a) {
+                    a.printStackTrace();
+                }
+            }
+
         });
         item_first.addActionListener(new ActionListener() {
             @Override
@@ -291,23 +322,19 @@ public class Jing_Chessboard implements ActionListener {
                     computer_y = y;
 
                 //}
-
                 break;
             }
-
         }
         board_value[best_x][best_y] = 1;
         board_button[best_x][best_y].setText("X");//new ImageIcon("./cha.png")
         board_button[best_x][best_y].setEnabled(false);
     }
-
     //玩家下棋
     void player_play(int x,int y){
         board_value[x][y] = -1;
         board_button[x][y].setText("O");//new ImageIcon("./circle.png")
         board_button[x][y].setEnabled(false);
     }
-
     //判断是否有空格
     int is_null(int[][] current_board){
         int flag = 0;//判断是否有空格，0没有，1有
@@ -317,14 +344,9 @@ public class Jing_Chessboard implements ActionListener {
                     flag = 1;
             }
         }
-
         return flag;
     }
-
-    //判断是否胜利
-    //优化方法(?)根据该题解:https://leetcode.cn/problems/find-winner-on-a-tic-tac-toe-game/solutions/48742/java-wei-yun-suan-xiang-jie-shi-yong-wei-yun-suan-/
-    //有空再优化qwq
-    //从O(3*n^2)->O(n+m)
+    //暴力判断胜利
     int is_win(int[][] current_board){
         int isWin = 0;//判断是否赢棋，1电脑赢，-1玩家赢
         for(int i = 0; i < row; i++){
@@ -367,11 +389,39 @@ public class Jing_Chessboard implements ActionListener {
             isWin = 1;
         else if(current_board[2][0] == -1 && current_board[1][1] == -1 && current_board[0][2] == -1)
             isWin = -1;*/
-
         return isWin;
     }
-
-    //评估函数，
+    //位运算判断胜利
+    //参考题解:https://leetcode.cn/problems/find-winner-on-a-tic-tac-toe-game/solutions/48742/java-wei-yun-suan-xiang-jie-shi-yong-wei-yun-suan-/
+    int iswin_2(int[][] current_board)
+    {
+        // a, b record the moving results of A, B
+        int a = 0, b = 0, len = current_board.length;
+        // ac records all cases of winning
+        int[] ac = {7, 56, 448, 73, 146, 292, 273, 84};
+        for(int i = 0; i < len; i ++){
+            // if i is add
+            if((i & 1) == 1){
+                // record the step result
+                b ^= 1 << (3 * current_board[i][0] + current_board[i][1]);
+            }
+            else {
+                a ^= 1 << (3 * current_board[i][0] + current_board[i][1]);
+            }
+        }
+        for(int i : ac){
+            // if the moving result contains the winning case in record, then win
+            if((a & i) == i){
+                return 1;
+            }
+            if((b & i) == i){
+                return -1;
+            }
+        }
+        // or judge the result by the amount of steps
+        return 0;
+    }
+    //评估函数
     int evaluate(int[][] current_board){
         if(is_win(current_board) >= 1){
             return MAX;
@@ -400,8 +450,6 @@ public class Jing_Chessboard implements ActionListener {
             }
             count+=sum/row;
         }
-
-
         for (int j=0;j<row;j++)
         {
             count += tmp_value[j][j]  / row;
@@ -449,9 +497,8 @@ public class Jing_Chessboard implements ActionListener {
         }
         return 0;
     }
-    //极小极大博弈算法，但博弈得还不明白，alpha-beta剪枝，还是拿贪心补充下智力
+    //极小极大博弈算法，alpha-beta剪枝，但博弈得还不明白，还是拿贪心补充下智力
     //plan:再加个记忆化，还是python舒服啊,直接再加个@cache就行
-
     int MAX_MIN(int current_depth, int alpha, int beta, int[][] currentBoard) {
         int value;        //估值
         int bestValue = 0;//最好的估值
@@ -484,12 +531,10 @@ public class Jing_Chessboard implements ActionListener {
             for (int j = 0; j < col; j++) {
                 if (tmp_board_value[i][j] == 0) {
                     tmp_board_value[i][j] = player;
-
                     player = (player == 1) ? -1 : 1;
                     value = MAX_MIN(current_depth - 1, alpha, beta, tmp_board_value);
                     tmp_board_value[i][j] = 0;
                     player = (player == 1) ? -1 : 1;
-
                     if (player == 1) {
                         if (value > bestValue) {
                             bestValue = value;
@@ -521,8 +566,6 @@ public class Jing_Chessboard implements ActionListener {
         }
         return bestValue;
     }
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton btn = (JButton)e.getSource();
@@ -585,7 +628,6 @@ public class Jing_Chessboard implements ActionListener {
             }
         }
     }
-
     //主函数
     public static void main(String[] args){
         Jing_Chessboard Saolei = new Jing_Chessboard();
