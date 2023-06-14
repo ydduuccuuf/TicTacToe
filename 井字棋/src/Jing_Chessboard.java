@@ -85,23 +85,28 @@ public class Jing_Chessboard implements ActionListener {
         item_begin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for(int i = 0; i < row; i++){
-                    for(int j = 0; j < col; j++){
-                        board_value[i][j] = 0;
-                        board_button[i][j].setEnabled(true);//按钮重置可以点开
-                        board_button[i][j].setText("");
+                try {
+                    for (int i = 0; i < row; i++) {
+                        for (int j = 0; j < col; j++) {
+                            board_value[i][j] = 0;
+                            board_button[i][j].setEnabled(true);//按钮重置可以点开
+                            board_button[i][j].setText("");
+                        }
                     }
-                }
-                if(first_or_last == 1){
-                    computer_first = 1;
-                    if(depth == 0) {
-                        computer_play_normal(board_value);
-                    }
-                    else {
-                        computer_play(board_value);
-                    }
+                    if (first_or_last == 1) {
+                        computer_first = 1;
+                        if (depth == 0) {
+                            computer_play_normal(board_value);
+                        } else {
+                            computer_play(board_value);
+                        }
 
-                    computer_first = 0;
+                        computer_first = 0;
+                    }
+                }catch(Exception a)
+                {
+                    //a.printStackTrace();
+                    JOptionPane.showMessageDialog(frame, "请设置大小");
                 }
             }
         });
@@ -134,13 +139,15 @@ public class Jing_Chessboard implements ActionListener {
                     } else if (is_win(board_value)==-1) {
                         writer.write("玩家赢\n");
                     }
+                    else {
+                        writer.write("输赢未定\n");
+                    }
                     writer.close();
                 } catch (IOException a) {
                     a.printStackTrace();
+
                 }
             }
-
-
         });
         item_first.addActionListener(new ActionListener() {
             @Override
@@ -254,7 +261,6 @@ public class Jing_Chessboard implements ActionListener {
         computer_first = 0;
         computer_x = -1;
         computer_y = -1;
-
         frame.setVisible(true);//显示出来
     }
     //自定义棋盘大小
@@ -280,10 +286,8 @@ public class Jing_Chessboard implements ActionListener {
 
         if(GREEDY(current_board)==1)
         {
-
                 computer_x = best_x;
                 computer_y = best_y;
-
         }
         else {
             MAX_MIN(depth, -1000, 1000, current_board);
@@ -307,11 +311,9 @@ public class Jing_Chessboard implements ActionListener {
 
             if(GREEDY(current_board)==1)
             {
-
                     computer_x = best_x;
                     computer_y = best_y;
                     break;
-
             }
             x = (int)(Math.random() * col);
             y = (int)(Math.random() * row);
@@ -321,7 +323,6 @@ public class Jing_Chessboard implements ActionListener {
                 //if(computer_first == 1){
                     computer_x = x;
                     computer_y = y;
-
                 //}
                 break;
             }
@@ -430,10 +431,8 @@ public class Jing_Chessboard implements ActionListener {
         if(is_win(current_board) <= -1){
             return MIN;
         }
-
         int count = 0;
         int[][] tmp_value = new int[row][col];
-
         //将棋盘空白填满电脑的棋子，计算value
         for(int i = 0; i < row; i++){
             for(int j = 0; j < col; j++){
@@ -527,7 +526,6 @@ public class Jing_Chessboard implements ActionListener {
                 tmp_board_value[i][j] = currentBoard[i][j];
             }
         }
-
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 if (tmp_board_value[i][j] == 0) {
