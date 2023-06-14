@@ -140,6 +140,7 @@ public class Jing_Chessboard implements ActionListener {
                 }
             }
 
+
         });
         item_first.addActionListener(new ActionListener() {
             @Override
