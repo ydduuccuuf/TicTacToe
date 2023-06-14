@@ -627,7 +627,6 @@ public class Jing_Chessboard implements ActionListener {
             }
         }
     }
-
     //主函数
     public static void main(String[] args){
         Jing_Chessboard Saolei = new Jing_Chessboard();
