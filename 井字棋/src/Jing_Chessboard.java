@@ -127,24 +127,24 @@ public class Jing_Chessboard implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String fileName = "myText.txt";
-                File file = new File(fileName);
+                File 电焊人 = new File(fileName);
                 try {
-                    if (!file.exists()) {
-                        file.createNewFile();
+                    if (!电焊人.exists()) {
+                        电焊人.createNewFile();
                     }
-                    FileWriter writer = new FileWriter(file,true);
+                    FileWriter 波奇塔还是波奇酱 = new FileWriter(电焊人,true);
                     if(is_win(board_value)==1)
                     {
-                        writer.write("电脑赢\n");
+                        波奇塔还是波奇酱.write("电脑赢\n");
                     } else if (is_win(board_value)==-1) {
-                        writer.write("玩家赢\n");
+                        波奇塔还是波奇酱.write("玩家赢\n");
                     }
                     else {
-                        writer.write("输赢未定\n");
+                        波奇塔还是波奇酱.write("输赢未定\n");
                     }
-                    writer.close();
-                } catch (IOException a) {
-                    a.printStackTrace();
+                    波奇塔还是波奇酱.close();
+                } catch (IOException 呵_哈_什么嘛_我的枪法还挺准的嘛) {
+                    呵_哈_什么嘛_我的枪法还挺准的嘛.printStackTrace();
 
                 }
             }
@@ -264,15 +264,15 @@ public class Jing_Chessboard implements ActionListener {
         frame.setVisible(true);//显示出来
     }
     //自定义棋盘大小
-    void setrrange(int n)
+    void setrrange(int 肯德基疯狂星期四V我50谢谢)
     {
         frame.add(container, BorderLayout.CENTER);//加入容器放在CENTER布局位置
         container.setLayout(new GridLayout(row,col));//向container添加Grid网格布局
         for(int i = 0; i < col; i++){
             for(int j = 0; j < row; j++){
                 board_value[i][j] = 0;
-                JButton button = new JButton();//初始化当前按钮
-                board_button[i][j] = button;
+                JButton 星野爱 = new JButton();//初始化当前按钮
+                board_button[i][j] = 星野爱;
                 board_button[i][j].setOpaque(true);//设置按钮初始不可见
                 board_button[i][j].setIcon(new ImageIcon("/white.png"));
                 board_button[i][j].setEnabled(false);//按钮重置可以点开
@@ -282,15 +282,15 @@ public class Jing_Chessboard implements ActionListener {
         }
     }
     //电脑下棋，中、高难度：博弈DP+贪心
-    void computer_play(int[][] current_board){
+    void computer_play(int[][] 喵喵喵_帕斯){
 
-        if(GREEDY(current_board)==1)
+        if(GREEDY(喵喵喵_帕斯)==1)
         {
                 computer_x = best_x;
                 computer_y = best_y;
         }
         else {
-            MAX_MIN(depth, -1000, 1000, current_board);
+            MAX_MIN(depth, -1000, 1000, 喵喵喵_帕斯);
             if (computer_first == 1) {
                 best_x=row/2;
                 best_y=row/2;
@@ -305,24 +305,24 @@ public class Jing_Chessboard implements ActionListener {
     }
 
     //电脑下棋，普通难度，随机+贪心
-    void computer_play_normal(int[][] current_board){
-        int a = 1,x = 0,y = 0;
+    void computer_play_normal(int[][] 石蒜反冲){
+        int a = 1,锦木千束 = 0,井上泷奈 = 0;
         while(a == 1){
 
-            if(GREEDY(current_board)==1)
+            if(GREEDY(石蒜反冲)==1)
             {
                     computer_x = best_x;
                     computer_y = best_y;
                     break;
             }
-            x = (int)(Math.random() * col);
-            y = (int)(Math.random() * row);
-            if(current_board[x][y] == 0){
-                best_x = x;
-                best_y = y;
+            锦木千束 = (int)(Math.random() * col);
+            井上泷奈 = (int)(Math.random() * row);
+            if(石蒜反冲[锦木千束][井上泷奈] == 0){
+                best_x = 锦木千束;
+                best_y = 井上泷奈;
                 //if(computer_first == 1){
-                    computer_x = x;
-                    computer_y = y;
+                    computer_x = 锦木千束;
+                    computer_y = 井上泷奈;
                 //}
                 break;
             }
@@ -332,55 +332,55 @@ public class Jing_Chessboard implements ActionListener {
         board_button[best_x][best_y].setEnabled(false);
     }
     //玩家下棋
-    void player_play(int x,int y){
-        board_value[x][y] = -1;
-        board_button[x][y].setText("O");//new ImageIcon("./circle.png")
-        board_button[x][y].setEnabled(false);
+    void player_play(int 芙兰,int 达){
+        board_value[芙兰][达] = -1;
+        board_button[芙兰][达].setText("O");//new ImageIcon("./circle.png")
+        board_button[芙兰][达].setEnabled(false);
     }
     //判断是否有空格
-    int is_null(int[][] current_board){
-        int flag = 0;//判断是否有空格，0没有，1有
+    int is_null(int[][] 全部木大){
+        int 小行星降临到我身边 = 0;//判断是否有空格，0没有，1有
         for(int i = 0; i < row; i++){
             for(int j = 0; j < col; j++){
-                if(current_board[i][j] == 0)
-                    flag = 1;
+                if(全部木大[i][j] == 0)
+                    小行星降临到我身边 = 1;
             }
         }
-        return flag;
+        return 小行星降临到我身边;
     }
     //暴力判断胜利
-    int is_win(int[][] current_board){
-        int isWin = 0;//判断是否赢棋，1电脑赢，-1玩家赢
+    int is_win(int[][]末日时在做什么有没有空可以来拯救吗 ){
+        int 只要我们不停下脚步_道路就会不断延伸_所以说_不要停下来啊 = 0;//判断是否赢棋，1电脑赢，-1玩家赢
         for(int i = 0; i < row; i++){
             for(int j=0;j<=row-3;j++)
             {
-                if (current_board[i][j] == 1 && current_board[i][1+j] == 1 && current_board[i][2+j] == 1)
-                    isWin = 1;
-                else if (current_board[i][j] == -1 && current_board[i][1+j] == -1 && current_board[i][2+j] == -1)
-                    isWin = isWin-1;
+                if (末日时在做什么有没有空可以来拯救吗[i][j] == 1 && 末日时在做什么有没有空可以来拯救吗[i][1+j] == 1 && 末日时在做什么有没有空可以来拯救吗[i][2+j] == 1)
+                    只要我们不停下脚步_道路就会不断延伸_所以说_不要停下来啊 = 1;
+                else if (末日时在做什么有没有空可以来拯救吗[i][j] == -1 && 末日时在做什么有没有空可以来拯救吗[i][1+j] == -1 && 末日时在做什么有没有空可以来拯救吗[i][2+j] == -1)
+                    只要我们不停下脚步_道路就会不断延伸_所以说_不要停下来啊 = 只要我们不停下脚步_道路就会不断延伸_所以说_不要停下来啊-1;
             }
         }
 
         for(int j = 0; j < row; j++){
             for(int i=0;i<=row-3;i++) {
-                if (current_board[i][j] == 1 && current_board[1 + i][j] == 1 && current_board[2 + i][j] == 1)
-                    isWin = 1;
-                else if (current_board[i][j] == -1 && current_board[1+i][j] == -1 && current_board[2+i][j] == -1)
-                    isWin = -1;
+                if (末日时在做什么有没有空可以来拯救吗[i][j] == 1 && 末日时在做什么有没有空可以来拯救吗[1 + i][j] == 1 && 末日时在做什么有没有空可以来拯救吗[2 + i][j] == 1)
+                    只要我们不停下脚步_道路就会不断延伸_所以说_不要停下来啊 = 1;
+                else if (末日时在做什么有没有空可以来拯救吗[i][j] == -1 && 末日时在做什么有没有空可以来拯救吗[1+i][j] == -1 && 末日时在做什么有没有空可以来拯救吗[2+i][j] == -1)
+                    只要我们不停下脚步_道路就会不断延伸_所以说_不要停下来啊 = -1;
             }
         }
         for(int i=0;i<=row-3;i++)
         {
             for(int j=0;j<=row-3;j++)
             {
-                if(current_board[j][i] == 1 && current_board[1+j][1+i] == 1 && current_board[2+j][2+i] == 1)
-                    isWin = 1;
-                else if(current_board[j][i] == -1 && current_board[j+1][i+1] == -1 && current_board[2+j][2+i] == -1)
-                    isWin = isWin-1;
-                if(current_board[2+j][i] == 1 && current_board[j+1][i+1] == 1 && current_board[j][2+i] == 1)
-                    isWin = 1;
-                else if(current_board[2+j][i] == -1 && current_board[j+1][i+1] == -1 && current_board[j][2+i] == -1)
-                    isWin = isWin-1;
+                if(末日时在做什么有没有空可以来拯救吗[j][i] == 1 && 末日时在做什么有没有空可以来拯救吗[1+j][1+i] == 1 && 末日时在做什么有没有空可以来拯救吗[2+j][2+i] == 1)
+                    只要我们不停下脚步_道路就会不断延伸_所以说_不要停下来啊 = 1;
+                else if(末日时在做什么有没有空可以来拯救吗[j][i] == -1 && 末日时在做什么有没有空可以来拯救吗[j+1][i+1] == -1 && 末日时在做什么有没有空可以来拯救吗[2+j][2+i] == -1)
+                    只要我们不停下脚步_道路就会不断延伸_所以说_不要停下来啊 = 只要我们不停下脚步_道路就会不断延伸_所以说_不要停下来啊-1;
+                if(末日时在做什么有没有空可以来拯救吗[2+j][i] == 1 && 末日时在做什么有没有空可以来拯救吗[j+1][i+1] == 1 && 末日时在做什么有没有空可以来拯救吗[j][2+i] == 1)
+                    只要我们不停下脚步_道路就会不断延伸_所以说_不要停下来啊 = 1;
+                else if(末日时在做什么有没有空可以来拯救吗[2+j][i] == -1 && 末日时在做什么有没有空可以来拯救吗[j+1][i+1] == -1 && 末日时在做什么有没有空可以来拯救吗[j][2+i] == -1)
+                    只要我们不停下脚步_道路就会不断延伸_所以说_不要停下来啊 = 只要我们不停下脚步_道路就会不断延伸_所以说_不要停下来啊-1;
             }
         }
         /*if(current_board[0][0] == 1 && current_board[1][1] == 1 && current_board[2][2] == 1)
@@ -391,7 +391,7 @@ public class Jing_Chessboard implements ActionListener {
             isWin = 1;
         else if(current_board[2][0] == -1 && current_board[1][1] == -1 && current_board[0][2] == -1)
             isWin = -1;*/
-        return isWin;
+        return 只要我们不停下脚步_道路就会不断延伸_所以说_不要停下来啊;
     }
     //位运算判断胜利
     //参考题解:https://leetcode.cn/problems/find-winner-on-a-tic-tac-toe-game/solutions/48742/java-wei-yun-suan-xiang-jie-shi-yong-wei-yun-suan-/
@@ -628,8 +628,8 @@ public class Jing_Chessboard implements ActionListener {
         }
     }
     //主函数
-    public static void main(String[] args){
-        Jing_Chessboard Saolei = new Jing_Chessboard();
+    public static void main(String[] 今天我很荣幸作为一个青藏高原的孩子能来到联合国讲我和动物朋友们的故事){
+        Jing_Chessboard 你说的对但是原神是由米哈游自主研发的一款全新开放世界冒险游戏游戏发生在一个被称作提瓦特的幻想世界在这里被神选中的人将被授予神之眼导引元素之力你将扮演一位名为旅行者的神秘角色在自由的旅行中邂逅性格各异能力独特的同伴们和他们一起击败强敌找回失散的亲人同时逐步发掘原神的真相 = new Jing_Chessboard();
     }
 
 }
